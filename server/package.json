@@ -1,0 +1,17 @@
+{
+  "name": "lunch-box-server",
+  "version": "1.0.0",
+  "description": "Server side setup for Lunch box App created for Vaishak Nair's Portfolio",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vaishak Nair",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
