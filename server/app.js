@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-const menuRouter = require('./routes/menu');
-const orderRouter = require('./routes/order');
-const contactRouter = require('./routes/contact');
-const userRouter = require('./routes/user');
-const adminRouter = require('./routes/admin');
+const menuRouter = require('./routes/menuRoute');
+const orderRouter = require('./routes/orderRoute');
+const contactRouter = require('./routes/contactRoute');
+const userRouter = require('./routes/userRoute');
+const adminRouter = require('./routes/adminRoute');
 
 app.use('/api/lunchbox/v1/menu', menuRouter)
 app.use('/api/lunchbox/v1/orders', orderRouter)

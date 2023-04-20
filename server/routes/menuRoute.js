@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const menuController = require('../controller/menu')
+const menuController = require('../controller/menuController')
 
 router
   .route('/')
