@@ -1,12 +1,57 @@
-exports.addNewAdmin = (req, res) => {
-  res.status(201).json({ status: 201, message: "Add New Admin Here" })
+const Admin = require('./../models/adminModel');
+
+exports.addNewAdmin = async (req, res) => {
+  try {
+    const admin = await Admin.create(req.body);
+    res.status(201).json({
+      status: "success",
+      data: {
+        admin: admin
+      }
+    })
+  }
+  catch (err) {
+    res.status(400).json({
+      status: "Failed",
+      error: err
+    })
+  }
 }
 exports.loginAdmin = (req, res) => {
-  res.status(200).json({ status: 200, message: "Admin Login" })
+  res.status(200).json({ status: 200, message: "admin Login NOT DEFINED" })
 }
-exports.updateAdmin = (req, res) => {
-  res.status(201).json({ status: 201, message: "Update Admin Detail" })
+exports.updateAdmin = async (req, res) => {
+  try {
+    const admin = await Admin.findByIdAndUpdate(req.params.id, req.body)
+    res.status(200).json({
+      status: 'success',
+      data: {
+        admin
+      }
+    })
+  }
+  catch (err) {
+    res.status(400).json({
+      status: "Failed",
+      error: err
+    })
+  }
 }
-exports.deleteAdmin = (req, res) => {
-  res.status(201).json({ status: 201, message: "Delete Admin" })
+
+exports.deleteAdmin = async (req, res) => {
+  try {
+    const admin = await Admin.findByIdAndDelete(req.params.id, req.body)
+    res.status(200).json({
+      status: 'success',
+      data: {
+        admin
+      }
+    })
+  }
+  catch (err) {
+    res.status(400).json({
+      status: "Failed",
+      error: err
+    })
+  }
 }
