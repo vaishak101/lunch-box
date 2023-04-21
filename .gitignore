@@ -1,3 +1,6 @@
 #Dependencies
 /client/node_modules
 /server/node_modules
+
+#ENV
+/server/config.env
