@@ -2,13 +2,22 @@ const Order = require('./../models/orderModel');
 
 exports.getAllOrder = async (req, res) => {
   try {
-    const order = await Order.find();
+    let query = Order.find();
+    if (req.query.month) {
+      let [idObj] = await Order.aggregate([
+        { $project: { month: { $month: '$orderDate' } } },
+        { $match: { month: Number(req.query.month) } }
+      ])
+      query = Order.find(idObj._id)
+    }
+    const order = await query;
     res.status(200).json({
       status: "success",
-      menu: order
+      orders: order
     })
   }
   catch (err) {
+    console.log(err)
     res.status(400).json({
       status: "Failed",
       error: err
@@ -26,6 +35,7 @@ exports.addOrder = async (req, res) => {
     })
   }
   catch (err) {
+    console.log(err)
     res.status(400).json({
       status: "Failed",
       error: err

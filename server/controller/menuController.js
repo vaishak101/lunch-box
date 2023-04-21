@@ -2,9 +2,18 @@ const Menu = require('./../models/menuModel');
 
 exports.getMenu = async (req, res) => {
   try {
-
-    console.log(req.query)
-    const allMenu = await Menu.find(req.query);
+    const queryObj = { ...req.query };
+    let query = Object;
+    //Search Filter
+    if (queryObj.name) {
+      let regex = new RegExp(queryObj.name, 'i');
+      query = Menu.find({ 'name': regex });
+    }
+    //Query Filter
+    else {
+      query = Menu.find(queryObj);
+    }
+    const allMenu = await query;
     res.status(200).json({
       status: "success",
       results: allMenu.length,
@@ -12,6 +21,7 @@ exports.getMenu = async (req, res) => {
     })
   }
   catch (err) {
+    console.log(err)
     res.status(400).json({
       status: "Failed",
       error: err
