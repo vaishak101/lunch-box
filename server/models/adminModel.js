@@ -3,11 +3,16 @@ const mongoose = require('mongoose')
 const adminModel = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     required: [true, "Admin must have a name"]
+  },
+  uname: {
+    type: String,
+    unique: true,
+    required: [true, "Admin must have a UserName"]
   },
   email: {
     type: String,
+    unique: true,
     required: [true, "Admin must have a Email ID"]
   },
   password: {
@@ -16,6 +21,7 @@ const adminModel = new mongoose.Schema({
   },
   phone: {
     type: String,
+    unique: true,
     required: [true, "Admin must have a Phone Number"]
   },
   dateOfReg: {

@@ -12,7 +12,8 @@ const menuSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: [true, "Menu Item must have a category"]
+    required: [true, "Menu Item must have a category"],
+    enum: ['rice', 'bread', 'maincourse', 'starter', 'desert']
   },
   price: {
     type: Number,

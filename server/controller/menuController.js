@@ -2,9 +2,12 @@ const Menu = require('./../models/menuModel');
 
 exports.getMenu = async (req, res) => {
   try {
-    const allMenu = await Menu.find();
+
+    console.log(req.query)
+    const allMenu = await Menu.find(req.query);
     res.status(200).json({
       status: "success",
+      results: allMenu.length,
       menu: allMenu
     })
   }
