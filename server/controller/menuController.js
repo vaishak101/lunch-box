@@ -1,71 +1,50 @@
 const Menu = require('./../models/menuModel');
+const apiUtils = require('./../utils/apiUtils')
+const asyncErrorHandler = require('./../middleware/asyncErrorHandle')
 
-exports.getMenu = async (req, res) => {
-  try {
-    const allMenu = await Menu.find();
-    res.status(200).json({
-      status: "success",
-      menu: allMenu
-    })
+exports.getMenu = asyncErrorHandler(async (req, res) => {
+  const queryObj = { ...req.query };
+  let query = Menu.find();
+  if (queryObj.name) {
+    query = apiUtils.searchFilter(Menu, queryObj.name)
   }
-  catch (err) {
-    res.status(400).json({
-      status: "Failed",
-      error: err
-    })
+  else {
+    query = Menu.find(queryObj);
   }
-}
+  const allMenu = await query;
+  res.status(200).json({
+    status: "success",
+    results: allMenu.length,
+    menu: allMenu
+  })
+})
 
-exports.addMenuItem = async (req, res) => {
-  try {
-    const menuItem = await Menu.create(req.body);
-    res.status(201).json({
-      status: "success",
-      data: {
-        menuItem: menuItem
-      }
-    })
-  }
-  catch (err) {
-    res.status(400).json({
-      status: "Failed",
-      error: err
-    })
-  }
-}
+exports.addMenuItem = asyncErrorHandler(async (req, res) => {
+  const menuItem = await Menu.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      menuItem: menuItem
+    }
+  })
+})
 
-exports.updateMenuItem = async (req, res) => {
-  try {
-    const menuItem = await Menu.findByIdAndUpdate(req.params.id, req.body)
-    res.status(200).json({
-      status: 'success',
-      data: {
-        menuItem
-      }
-    })
-  }
-  catch (err) {
-    res.status(400).json({
-      status: "Failed",
-      error: err
-    })
-  }
-}
+exports.updateMenuItem = asyncErrorHandler(async (req, res) => {
+  const menuItem = await Menu.findByIdAndUpdate(req.params.id, req.body)
+  res.status(200).json({
+    status: 'success',
+    data: {
+      menuItem
+    }
+  })
+})
 
-exports.deleteMenuItem = async (req, res) => {
-  try {
-    const menuItem = await Menu.findByIdAndDelete(req.params.id, req.body)
-    res.status(200).json({
-      status: 'success',
-      data: {
-        menuItem
-      }
-    })
-  }
-  catch (err) {
-    res.status(400).json({
-      status: "Failed",
-      error: err
-    })
-  }
-}
+exports.deleteMenuItem = asyncErrorHandler(async (req, res) => {
+  const menuItem = await Menu.findByIdAndDelete(req.params.id, req.body)
+  res.status(200).json({
+    status: 'success',
+    data: {
+      menuItem
+    }
+  })
+})

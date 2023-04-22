@@ -1,13 +1,9 @@
 const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
-  uname: {
-    type: String,
-    unique: true,
-    required: [true, "Order must have a Username"]
-  },
   email: {
     type: String,
+    unique: true,
     required: [true, "Order must have a UserEmail"]
   },
   orderId: {

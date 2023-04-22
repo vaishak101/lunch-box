@@ -4,6 +4,7 @@ const menuSchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
+    index: true,
     required: [true, "Menu Item must have a name"]
   },
   desc: {
@@ -12,7 +13,8 @@ const menuSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: [true, "Menu Item must have a category"]
+    required: [true, "Menu Item must have a category"],
+    enum: ['rice', 'bread', 'maincourse', 'starter', 'desert']
   },
   price: {
     type: Number,

@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const contactSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     required: [true, "Contact Form must have a name"]
   },
   email: {
@@ -12,6 +11,10 @@ const contactSchema = new mongoose.Schema({
   },
   message: {
     type: String,
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now()
   }
 })
 
