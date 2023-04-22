@@ -39,6 +39,7 @@ exports.getMessages = async (req, res) => {
 
     res.status(200).json({
       status: "success",
+      results: contact.length,
       messages: contact
     })
   }

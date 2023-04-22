@@ -1,15 +1,13 @@
 const Menu = require('./../models/menuModel');
+const apiUtils = require('./../utils/apiUtils')
 
 exports.getMenu = async (req, res) => {
   try {
     const queryObj = { ...req.query };
-    let query = Object;
-    //Search Filter
+    let query = Menu.find();
     if (queryObj.name) {
-      let regex = new RegExp(queryObj.name, 'i');
-      query = Menu.find({ 'name': regex });
+      query = apiUtils.searchFilter(Menu, queryObj.name)
     }
-    //Query Filter
     else {
       query = Menu.find(queryObj);
     }
