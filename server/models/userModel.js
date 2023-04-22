@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "User must have a Password"]
+    required: [true, "User must have a Password"],
+    select: false
   },
   passwordConfirm: {
     type: String,
@@ -27,6 +28,9 @@ const userSchema = new mongoose.Schema({
       },
       message: "Confirm password doesn't match with entered password"
     }
+  },
+  passwordChangedAt: {
+    type: Date
   },
   phone: {
     type: String,
@@ -42,6 +46,18 @@ const userSchema = new mongoose.Schema({
     type: Date,
   }
 })
+
+userSchema.methods.validatePassword = async function (enteredPassword, userPassword) {
+  return await bcrypt.compare(enteredPassword, userPassword);
+}
+
+userSchema.methods.passwordModifiedAfter = function (timeStamp) {
+  let changedTimeStamp;
+  if (this.passwordChangedAt) {
+    changedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10)
+  }
+  return timeStamp < changedTimeStamp;
+}
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return

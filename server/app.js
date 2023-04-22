@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const errorHandler = require('./middleware/errorHandle');
-const errorClass = require('./utils/errorClass')
+const throwError = require('./utils/throwError')
 app.use(express.json());
 const menuRouter = require('./routes/menuRoute');
 const orderRouter = require('./routes/orderRoute');
@@ -15,7 +15,7 @@ app.use('/api/lunchbox/v1/contact', contactRouter)
 app.use('/api/lunchbox/v1/user', userRouter)
 app.use('/api/lunchbox/v1/admin', adminRouter)
 app.all('*', (req, res, next) => {
-  next(new errorClass(`Can't find ${req.originalUrl} on this server!`, 404))
+  next(new throwError(`Can't find ${req.originalUrl} on this server!`, 404))
 });
 app.use(errorHandler);
 module.exports = app
