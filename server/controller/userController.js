@@ -1,3 +1,4 @@
+const { promisify } = require('util')
 const User = require('./../models/userModel');
 const asyncErrorHandler = require('./../middleware/asyncErrorHandle');
 const jwt = require('jsonwebtoken');
@@ -70,4 +71,27 @@ exports.loginUser = asyncErrorHandler(async (req, res, next) => {
     token,
     message: "Logged In"
   })
+})
+
+exports.protect = asyncErrorHandler(async (req, res, next) => {
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if (!token) {
+    return next(new throwError("You are not logged in , Please login again"), 401)
+  }
+
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECURE_CODE)
+
+  const userExist = await User.findById(decoded.id)
+  if (!userExist) {
+    return next(new throwError("User no longer exist"), 401)
+  }
+
+  if (userExist.passwordModifiedAfter(decoded.iat)) {
+    return next(new throwError("Password changed! please login again", 401))
+  }
+  next();
 })
