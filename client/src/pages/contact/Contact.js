@@ -23,7 +23,6 @@ function Contact() {
     // if (fname.length < 1) {
     //   setFnameerror('Please enter a valid name')
     // }
-    const url = '/api/lunchbox/v1/contact'
     const data = {
       "name": fname,
       "email": email,
@@ -38,13 +37,14 @@ function Contact() {
       body: JSON.stringify(data),
     })
 
+    const responseData = await response.json();
     if (response.status == 201) {
       setFname('')
       setEmail('')
       setMsg('')
       console.log("Message Sent!")
     } else {
-      console.log(response.statusText)
+      console.log(responseData.message)
     }
   }
 
