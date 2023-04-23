@@ -59,7 +59,7 @@ function Login() {
               {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
             </div>
             <div className="field-wrap">
-              <label for="password">Enter your Name</label>
+              <label for="password">Enter your Password</label>
               <input type="password" id='password' value={password} onChange={e => setpassword(e.target.value)} placeholder='John Wick' autoComplete='off' />
               {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
             </div>

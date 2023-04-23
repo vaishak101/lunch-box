@@ -1,5 +1,5 @@
-.userlogin .field-wrap{display: flex; flex-direction: column;}
-.userlogin .field-wrap:not(:last-child){margin-bottom: 30px;}
-.userlogin .field-wrap label{font-size: 1.8rem; line-height: 1.4;font-weight:300;margin-bottom: 5px;}
-.userlogin .field-wrap input{padding: 10px;font-size: 1.8rem; line-height: 1.4;color: #2a2a2a;border-radius:10px;}
-.userlogin .submit-btn{padding: 10px; border-radius:20px;}
+.field-wrap{display: flex; flex-direction: column;}
+.field-wrap:not(:last-child){margin-bottom: 30px;}
+.field-wrap label{font-size: 1.8rem; line-height: 1.4;font-weight:300;margin-bottom: 5px;}
+.field-wrap input{padding: 10px;font-size: 1.8rem; line-height: 1.4;color: #2a2a2a;border-radius:10px;}
+.submit-btn{padding: 10px; border-radius:20px;}
