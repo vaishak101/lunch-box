@@ -4,7 +4,10 @@ function About() {
   return (
     <>
       <Header />
-      <h1>About US</h1>
+      <div className="container">
+        <h1>About US</h1>
+        <h2>Add Detail About Vaishak Nair</h2>
+      </div>
     </>
   )
 }
