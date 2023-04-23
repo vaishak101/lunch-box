@@ -9,7 +9,7 @@ router
 
 router
   .route('/login')
-  .get(userController.loginUser)
+  .post(userController.loginUser)
 // .patch(userController.updateUser)
 // .delete(userController.deleteUser)
 
