@@ -12,5 +12,8 @@ router
   .post(userController.loginUser)
 // .patch(userController.updateUser)
 // .delete(userController.deleteUser)
+router
+  .post('/forgotPassword', userController.forgotPassword)
+  .patch('/resetPassword/:token', userController.resetPassword);
 
 module.exports = router;
