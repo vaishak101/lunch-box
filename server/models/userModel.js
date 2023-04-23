@@ -51,6 +51,11 @@ const userSchema = new mongoose.Schema({
   dateOfReg: {
     default: Date.now(),
     type: Date,
+  },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
   }
 })
 
@@ -60,6 +65,12 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
   next();
 })
+
+userSchema.pre(/^find/, function (next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
 
 userSchema.methods.validatePassword = async function (enteredPassword, userPassword) {
   return await bcrypt.compare(enteredPassword, userPassword);

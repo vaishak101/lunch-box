@@ -11,6 +11,14 @@ const createToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECURE_CODE, { expiresIn: process.env.JWT_EXPIRY })
 }
 
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
+
 const createSendToken = (user, statusCode, res) => {
   const token = createToken(user._id);
   const cookieOptions = {
@@ -39,6 +47,7 @@ exports.getAllUser = asyncErrorHandler(async (req, res) => {
   const user = await User.find();
   res.status(200).json({
     status: "success",
+    result: user.length,
     menu: user
   })
 })
@@ -57,24 +66,31 @@ exports.addNewUser = asyncErrorHandler(async (req, res) => {
   })
 })
 
-exports.updateUser = asyncErrorHandler(async (req, res) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body)
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user
-    }
-  })
-})
+exports.protect = asyncErrorHandler(async (req, res, next) => {
+  console.log('protect')
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
-exports.deleteUser = asyncErrorHandler(async (req, res) => {
-  const user = await User.findByIdAndDelete(req.params.id, req.body)
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user
-    }
-  })
+  if (!token) {
+    return next(new throwError("You are not logged in , Please login again"), 401)
+  }
+
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECURE_CODE)
+
+  const userExist = await User.findById(decoded.id)
+  if (!userExist) {
+    return next(new throwError("User no longer exist"), 401)
+  }
+
+  if (userExist.passwordModifiedAfter(decoded.iat)) {
+    return next(new throwError("Password changed! please login again", 401))
+  }
+
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = userExist;
+  next();
 })
 
 exports.loginUser = asyncErrorHandler(async (req, res, next) => {
@@ -100,6 +116,7 @@ exports.loginUser = asyncErrorHandler(async (req, res, next) => {
 })
 
 exports.protect = asyncErrorHandler(async (req, res, next) => {
+  console.log('protect')
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
@@ -119,6 +136,9 @@ exports.protect = asyncErrorHandler(async (req, res, next) => {
   if (userExist.passwordModifiedAfter(decoded.iat)) {
     return next(new throwError("Password changed! please login again", 401))
   }
+
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = userExist;
   next();
 })
 
@@ -189,4 +209,62 @@ exports.resetPassword = asyncErrorHandler(async (req, res, next) => {
   // 3) Update changedPasswordAt property for the user
   // 4) Log the user in, send JWT
   createSendToken(user, 200, res);
+});
+
+exports.updatePassword = asyncErrorHandler(async (req, res, next) => {
+
+  // 1) Get user from collection
+  const user = await User.findById(req.user.id).select('+password');
+
+  // 2) Check if POSTed current password is correct
+  if (!(await user.validatePassword(req.body.passwordCurrent, user.password))) {
+    return next(new throwError('Your current password is wrong.', 401));
+  }
+
+  // 3) If so, update password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+  // User.findByIdAndUpdate will NOT work as intended!
+
+  // 4) Log user in, send JWT
+  createSendToken(user, 200, res);
+});
+
+exports.updateUser = asyncErrorHandler(async (req, res, next) => {
+  // 1) Create error if user POSTs password data
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(
+      new throwError(
+        'This route is not for password updates. Please use /updateMyPassword.',
+        400
+      )
+    );
+  }
+
+  // 2) Filtered out unwanted fields names that are not allowed to be updated
+  const filteredBody = filterObj(req.body, 'address', 'phone');
+  console.log(filteredBody)
+  // 3) Update user document
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true
+  });
+
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser
+    }
+  });
+});
+
+exports.deleteUser = asyncErrorHandler(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
 });
