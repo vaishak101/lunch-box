@@ -1,0 +1,16 @@
+.menu-wrap{margin: 20px 0 0 0;}
+.menu-wrap li{display: flex;align-items: center; justify-content: space-between; border-radius:10px;border: 2px solid #d3d3d3;padding: 20px; margin-bottom: 10px;}
+.menu-wrap .title{font-size: 2.2rem;margin-bottom: 5px;}
+.menu-wrap .desc{font-size: 1.8rem;font-weight: 300;}
+.menu-wrap .price{font-size: 1.8rem;font-weight: 700; margin-bottom: 5px;}
+.menu-wrap .order-btn{font-size: 1.6rem;padding: 5px 15px; border-radius: 10px;}
+
+.qty-wrap{display: flex;align-items:center;justify-content: space-between;margin-bottom: 15px;font-size: 1.6rem;}
+.qty-wrap .btn-wrap{display:flex;margin: 0 -5px;}
+.qty-wrap .btn-wrap button{margin: 0 5px;padding: 2px 5px;font-size: 1.6rem;  }
+
+
+.overlay{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0000005f;}
+.order-modal{position: fixed; top: 50%; left: 50%;transform: translate(-50%,-50%); width: 500px; }
+.order-modal .content-wrap{position: relative;background: #fff; padding: 20px; border-radius: 10px; border: 3px solid salmon;}
+.order-modal .close-btn{position: absolute;right: -30px; top: -30px;display: flex; align-items: center; justify-content: center; background: #fff; width: 30px; height: 30px; border-radius: 50%;font-size: 2rem; border: 1px solid #000; cursor:pointer; }
