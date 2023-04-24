@@ -1,7 +1,11 @@
 const ProfileTab = () => {
   return (
     <div className="ProfileTab">
-      <p>ProfileTab</p>
+      <div className="button-wrap">
+        <button>Update Profile</button>
+        <button>Change Password</button>
+        <button>Delete Profile</button>
+      </div>
     </div>
   );
 };

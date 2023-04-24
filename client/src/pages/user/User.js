@@ -15,27 +15,28 @@ function User() {
   const [activeTab, setActiveTab] = useState("menu");
   const [menu, setMenu] = useState([]);
   const [orders, setOrders] = useState([]);
-  const token = currentUser.token
+
   useEffect(() => {
-    console.log("API CALLED")
+    if (!currentUser) {
+      return navigate("/login")
+    }
     const menu = 'http://127.0.0.1:3000/api/lunchbox/v1/menu';
     const order = 'http://127.0.0.1:3000/api/lunchbox/v1/orders/user'
-    axios.get(menu, { headers: { "Authorization": `Bearer ${token}` } })
+    axios.get(menu, { headers: { "Authorization": `Bearer ${currentUser.token}` } })
       .then(res => {
         setMenu([...res.data.menu]);
       })
-    console.log(currentUser.email)
-    axios.post(order, { "email": currentUser.data.user.email, }, { headers: { "Authorization": `Bearer ${token}` } })
+    axios.post(order, { "email": currentUser.data.user.email, }, { headers: { "Authorization": `Bearer ${currentUser.token}` } })
       .then(res => {
         setOrders([...res.data.data]);
       })
   }, []);
 
-
   if (!currentUser) {
     alert("you are not logged in , Please login and try again")
     return <Navigate to={"/login"} />
   }
+  console.log(currentUser.data.user.email)
 
   function logout() {
     AuthService.logout();
@@ -48,7 +49,7 @@ function User() {
     <section className="user-dashboard">
       <div className="container">
         <header>
-          <h1>Welcome {currentUser.data.user.name}</h1>
+          <h1>Welcome, {currentUser.data.user.name}</h1>
           <button onClick={logout}>Logout</button>
         </header>
         <div className="tab-wrap">
@@ -58,7 +59,7 @@ function User() {
             <li className={activeTab === "profile" ? "active" : ""} onClick={e => { setActiveTab('profile') }}>Profile Tab</li>
           </ul>
           <div className="outlet">
-            {activeTab === "menu" && <MenuTab userData={currentUser.data.user} token={token} menu={menu} />}
+            {activeTab === "menu" && <MenuTab userData={currentUser.data.user} token={currentUser.token} menu={menu} />}
             {activeTab === "order" && <OrderTab orders={orders} />}
             {activeTab === "profile" && <ProfileTab />}
           </div>
