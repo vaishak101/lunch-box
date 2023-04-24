@@ -38,10 +38,19 @@ exports.getMessages = asyncErrorHandler(async (req, res) => {
 
 exports.deleteMessage = asyncErrorHandler(async (req, res) => {
   const contact = await Contact.findByIdAndDelete(req.params.id, req.body)
-  res.status(200).json({
-    status: 'success',
-    data: {
-      contact
-    }
-  })
+  if (contact) {
+    res.status(200).json({
+      status: 'success',
+      message: 'Message Deleted by Admin',
+      data: null
+    })
+  }
+  else {
+    res.status(404).json({
+      status: 'fail',
+      message: 'No message found for given user ID',
+      data: null
+    })
+  }
+
 })

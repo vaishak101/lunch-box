@@ -10,7 +10,11 @@ router
 router
   .route('/login')
   .post(userController.loginUser)
-// .patch(userController.updateUser)
-// .delete(userController.deleteUser)
+router
+  .post('/forgotPassword', userController.forgotPassword)
+  .patch('/resetPassword/:token', userController.resetPassword)
+  .patch('/updatePassword', userController.protect, userController.updatePassword)
+  .patch('/updateUser', userController.protect, userController.updateUser)
+  .delete('/deleteUser', userController.protect, userController.deleteUser);
 
 module.exports = router;
