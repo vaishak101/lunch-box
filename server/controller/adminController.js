@@ -19,16 +19,6 @@ const filterObj = (obj, ...allowedFields) => {
 
 const createSendToken = (admin, statusCode, res) => {
   const token = createToken(admin._id);
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true
-  };
-  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-  res.cookie('jwt', token, cookieOptions);
-
   // Remove password from output
   admin.password = undefined;
 
@@ -80,25 +70,12 @@ exports.loginAdmin = asyncErrorHandler(async (req, res) => {
     return next(new throwError('Incorrect Credentials!', 401))
   }
 
-  const token = createToken(admin._id)
-  res.status(200).json({
-    status: 200,
-    token,
-    message: "Logged In"
-  })
+  createSendToken(admin, 200, res);
 })
 
 exports.addNewAdmin = asyncErrorHandler(async (req, res) => {
   const admin = await Admin.create(req.body);
-  const token = createToken(admin._id)
-
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      admin: admin
-    }
-  })
+  createSendToken(admin, 201, res);
 })
 
 exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
