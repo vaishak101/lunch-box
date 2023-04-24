@@ -34,7 +34,7 @@ exports.updateMenuItem = asyncErrorHandler(async (req, res) => {
   res.status(200).json({
     status: 'success',
     data: {
-      menuItem
+      Item: menuItem.name
     }
   })
 })

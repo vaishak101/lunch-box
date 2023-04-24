@@ -8,9 +8,14 @@ router
   .post(adminController.addNewAdmin)
 
 router
-  .route('/:id')
-  .get(adminController.loginAdmin)
-  .patch(adminController.updateAdmin)
-  .delete(adminController.deleteAdmin)
+  .route('/login')
+  .post(adminController.loginAdmin)
+
+router
+  .post('/forgotPassword', adminController.forgotPassword)
+  .patch('/resetPassword/:token', adminController.resetPassword)
+  .patch('/updatePassword', adminController.protect, adminController.updatePassword)
+  .patch('/updateAdmin', adminController.protect, adminController.updateAdmin)
+  .delete('/deleteAdmin', adminController.protect, adminController.deleteAdmin);
 
 module.exports = router;

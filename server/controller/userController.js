@@ -67,7 +67,6 @@ exports.addNewUser = asyncErrorHandler(async (req, res) => {
 })
 
 exports.protect = asyncErrorHandler(async (req, res, next) => {
-  console.log('protect')
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
@@ -113,33 +112,6 @@ exports.loginUser = asyncErrorHandler(async (req, res, next) => {
     token,
     message: "Logged In"
   })
-})
-
-exports.protect = asyncErrorHandler(async (req, res, next) => {
-  console.log('protect')
-  let token;
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
-  }
-
-  if (!token) {
-    return next(new throwError("You are not logged in , Please login again"), 401)
-  }
-
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECURE_CODE)
-
-  const userExist = await User.findById(decoded.id)
-  if (!userExist) {
-    return next(new throwError("User no longer exist"), 401)
-  }
-
-  if (userExist.passwordModifiedAfter(decoded.iat)) {
-    return next(new throwError("Password changed! please login again", 401))
-  }
-
-  // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = userExist;
-  next();
 })
 
 exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
