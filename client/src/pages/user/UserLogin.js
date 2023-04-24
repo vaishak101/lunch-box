@@ -1,50 +1,31 @@
-import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Header from './../../components/common/Header/Header';
 import './UserLogin.css';
+import AuthService from "./../../services/auth-service";
+import { useState } from "react";
+
+
 function Login() {
-
-  const [email, setEmail] = useState('');
-  const [password, setpassword] = useState('');
-  const [emailError, setEmailerror] = useState(null);
-  const [passwordError, setPassworderror] = useState(null);
-  const [userStatus, setUserStatus] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('')
-
-  function validateEmail(enteredValue) {
-    const result = /\S+@\S+\.\S+/.test(enteredValue);
-    !result ? setEmailerror('Email is Invalid') : setEmailerror(null);
-    setEmail(enteredValue)
-  }
-
-
-  async function handleCick(e) {
-    e.preventDefault();
-    // if (setEmailerror) {
-    //   setPassworderror('Password should contain min 4 chars')
-    //   return
-    // }
-    const data = {
-      "email": email,
-      "password": password
-    }
-
-    const response = await fetch("http://127.0.0.1:3000/api/lunchbox/v1/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  const navigate = useNavigate();
+  const [msg, setMsg] = useState('')
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = (data) => {
+    AuthService.login(data).then(
+      () => {
+        setMsg("Logged In");
+        navigate('/user')
       },
-      body: JSON.stringify(data),
-    })
-    const responseData = await response.json();
-    if (response.status == 200) {
-      setUserStatus(true)
-      console.log(responseData)
-      setErrorMsg(responseData.message)
-    }
-    else {
-      setUserStatus(false)
-      setErrorMsg(responseData.message)
-    }
+      error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setMsg(resMessage)
+      }
+    );
   }
 
   return (
@@ -52,19 +33,19 @@ function Login() {
       <Header />
       <section className='userlogin'>
         <div className="container">
-          <form action="">
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="field-wrap">
-              <label for="email">Enter your Email Address</label>
-              <input type="email" id='email' value={email} onChange={e => validateEmail(e.target.value)} placeholder='johnwick@babayaga.com' />
-              {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
+              <label htmlFor="email">Enter your Email Address</label>
+              <input type="email" id='email' {...register("email", { required: { value: true, message: "Please enter your email!" }, pattern: { value: /\S+@\S+\.\S+/, message: ["Please enter a valid Email Address!"] } })} />
+              <p className='error-msg'>{errors.email?.message}</p>
             </div>
             <div className="field-wrap">
-              <label for="password">Enter your Password</label>
-              <input type="password" id='password' value={password} onChange={e => setpassword(e.target.value)} placeholder='John Wick' autoComplete='off' />
-              {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
+              <label htmlFor="password">Enter your Password</label>
+              <input type="password" id='password' autoComplete="off" {...register("password", { required: { value: true, message: "Please enter your password!" } })} />
+              <p className='error-msg'>{errors.password?.message}</p>
             </div>
-            <button className='submit-btn' type='submit' onClick={e => handleCick(e)}>Login!</button>
-            {<p style={userStatus ? { color: 'green' } : { color: ' red' }}>{errorMsg}</p>}
+            <button className='submit-btn' type='submit'>Login!</button>
+            {msg && <p>{msg}</p>}
           </form>
         </div>
       </section>

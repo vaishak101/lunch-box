@@ -3,3 +3,4 @@
 .field-wrap label{font-size: 1.8rem; line-height: 1.4;font-weight:300;margin-bottom: 5px;}
 .field-wrap input{padding: 10px;font-size: 1.8rem; line-height: 1.4;color: #2a2a2a;border-radius:10px;}
 .submit-btn{padding: 10px; border-radius:20px;}
+.error-msg{color: red;margin-top: 5px;}
