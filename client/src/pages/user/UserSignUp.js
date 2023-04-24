@@ -6,55 +6,6 @@ import { useState } from "react";
 import './UserLogin.css';
 
 function Signup() {
-  // const [fname, setFname] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setpassword] = useState('');
-  // const [confirmPassword, setconfirmPassword] = useState('');
-  // const [phone, setPhone] = useState('');
-  // const [address, setAddress] = useState('');
-
-  // const [emailError, setEmailerror] = useState('');
-  // const [errorMsg, setErrorMsg] = useState('')
-  // const [passwordError, setPassworderror] = useState(null);
-  // const [fnameError, setFnameerror] = useState(null);
-  // const [confirmPasswordError, setconfirmPasswordError] = useState(null);
-  // const [phoneError, setPhoneError] = useState(null)
-  // const [errorAddress, setAddressError] = useState(null)
-
-  // function validateEmail(enteredValue) {
-  //   const result = /\S+@\S+\.\S+/.test(enteredValue);
-  //   !result ? setEmailerror('Email is Invalid') : setEmailerror(null);
-  //   setEmail(enteredValue)
-  // }
-
-  // async function handleCick(e) {
-  //   e.preventDefault();
-
-  //   const data = {
-  //     "name": fname,
-  //     "email": email,
-  //     "password": password,
-  //     "passwordConfirm": confirmPassword,
-  //     "phone": phone,
-  //     "address": address
-  //   }
-
-  //   const response = await fetch("http://127.0.0.1:3000/api/lunchbox/v1/user", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   })
-  //   const responseData = await response.json();
-  //   console.log(responseData)
-  //   if (response.status == 200) {
-  //     setErrorMsg(responseData.status)
-  //   }
-  //   else {
-  //     setErrorMsg(responseData.message)
-  //   }
-  // }
   const [msg, setMsg] = useState('')
   const navigate = useNavigate();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
