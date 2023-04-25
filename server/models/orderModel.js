@@ -5,17 +5,17 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: [true, "Order must have a UserEmail"]
   },
-  orderTitle: {
-    type: String,
-    required: [true, "Order must have a Order Title"]
+  particular: {
+    type: Array,
+    required: [true, "Order must have Items"]
   },
-  orderQty: {
+  totalQty: {
     type: Number,
-    required: [true, "Order must have a Order Qty"]
+    required: [true, "Order must have a Total Qty"]
   },
-  orderPrice: {
+  totalPrice: {
     type: Number,
-    required: [true, "Order must have a Order Price"]
+    required: [true, "Order must have a Total Price"]
   },
   orderDate: {
     default: Date.now(),

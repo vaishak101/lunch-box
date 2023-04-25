@@ -7,9 +7,16 @@ const OrderTab = ({ orders }) => {
       <ul>
         {orders.map(el => <li key={el._id}>
           <div className="left-wrap">
-            <h2 className="title">{el.orderTitle}</h2>
-            <p className="price">Rs.{el.orderPrice}</p>
-            <p className="qty">Qty - {el.orderQty}</p>
+            <h2>Order-Detail</h2>
+            <div class="order-detail">
+              <ul>
+                {el.particular.map(item => <li>
+                  <span>{item.item}</span> x <span>{item.qty}</span>
+                </li>)}
+              </ul>
+            </div>
+            <p className="qty">Qty - {el.totalQty}</p>
+            <p className="price">Rs.{el.totalPrice}</p>
             <p className="date">Orderd On : {moment(el.orderDate).format('dd-mm-YYYY')}</p>
           </div>
         </li>)}
