@@ -1,3 +1,4 @@
+h1{font-size: 4.4rem; margin-bottom: 30px;}
 .field-wrap{display: flex; flex-direction: column;}
 .field-wrap:not(:last-child){margin-bottom: 30px;}
 .field-wrap label{font-size: 1.8rem; line-height: 1.4;font-weight:300;margin-bottom: 5px;}

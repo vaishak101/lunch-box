@@ -4,7 +4,7 @@ const throwError = require('./../utils/throwError');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util')
 const crypto = require('crypto');
-
+const sendEmail = require('./../utils/email');
 const createToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECURE_CODE, { expiresIn: process.env.JWT_EXPIRY })
 }
@@ -19,16 +19,6 @@ const filterObj = (obj, ...allowedFields) => {
 
 const createSendToken = (admin, statusCode, res) => {
   const token = createToken(admin._id);
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true
-  };
-  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-  res.cookie('jwt', token, cookieOptions);
-
   // Remove password from output
   admin.password = undefined;
 
@@ -67,7 +57,7 @@ exports.protect = asyncErrorHandler(async (req, res, next) => {
   next();
 })
 
-exports.loginAdmin = asyncErrorHandler(async (req, res) => {
+exports.loginAdmin = asyncErrorHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -80,25 +70,12 @@ exports.loginAdmin = asyncErrorHandler(async (req, res) => {
     return next(new throwError('Incorrect Credentials!', 401))
   }
 
-  const token = createToken(admin._id)
-  res.status(200).json({
-    status: 200,
-    token,
-    message: "Logged In"
-  })
+  createSendToken(admin, 200, res);
 })
 
 exports.addNewAdmin = asyncErrorHandler(async (req, res) => {
   const admin = await Admin.create(req.body);
-  const token = createToken(admin._id)
-
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      admin: admin
-    }
-  })
+  createSendToken(admin, 201, res);
 })
 
 exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
@@ -113,11 +90,10 @@ exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
   await admin.save({ validateBeforeSave: false });
 
   // 3) Send it to admin's email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/lunchbox/v1/admin/resetPassword/${resetToken}`;
+  const resetURL = `http://dev.lunch-box.com:3001/admin-reset-pw?lb=${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+  const message = `Forgot your password? Submit your new password and passwordConfirm to: ${resetURL}.\n
+  If you didn't forget your password, please ignore this email!`;
 
   try {
     await sendEmail({
@@ -202,26 +178,24 @@ exports.updateAdmin = asyncErrorHandler(async (req, res) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'address', 'phone');
-  console.log(filteredBody)
+  const filteredBody = filterObj(req.body, 'name', 'phone');
+
   // 3) Update admin document
   const updatedAdmin = await Admin.findByIdAndUpdate(req.admin.id, filteredBody, {
     new: true,
     runValidators: true
   });
 
-
   res.status(200).json({
     status: 'success',
     data: {
-      admin: updatedAdmin
+      admin: updatedAdmin.email
     }
   });
 })
 
 exports.deleteAdmin = asyncErrorHandler(async (req, res) => {
   await Admin.findByIdAndUpdate(req.admin.id, { active: false });
-
   res.status(204).json({
     status: 'success',
     data: null

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const adminModel = new mongoose.Schema({
   name: {
@@ -46,7 +47,13 @@ const adminModel = new mongoose.Schema({
   dateOfReg: {
     default: Date.now(),
     type: Date,
+  },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
   }
+
 })
 
 adminModel.pre('save', async function (next) {
@@ -56,10 +63,15 @@ adminModel.pre('save', async function (next) {
   next();
 })
 
+adminModel.pre(/^find/, function (next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 adminModel.methods.validatePassword = async function (enteredPassword, adminPassword) {
   return await bcrypt.compare(enteredPassword, adminPassword);
 }
-
 
 adminModel.methods.passwordModifiedAfter = function (timeStamp) {
   let changedTimeStamp;

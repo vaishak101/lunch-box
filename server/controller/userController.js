@@ -21,16 +21,6 @@ const filterObj = (obj, ...allowedFields) => {
 
 const createSendToken = (user, statusCode, res) => {
   const token = createToken(user._id);
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true
-  };
-  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-  res.cookie('jwt', token, cookieOptions);
-
   // Remove password from output
   user.password = undefined;
 
@@ -42,29 +32,6 @@ const createSendToken = (user, statusCode, res) => {
     }
   });
 };
-
-exports.getAllUser = asyncErrorHandler(async (req, res) => {
-  const user = await User.find();
-  res.status(200).json({
-    status: "success",
-    result: user.length,
-    menu: user
-  })
-})
-
-exports.addNewUser = asyncErrorHandler(async (req, res) => {
-  const user = await User.create(req.body);
-
-  const token = createToken(user._id)
-
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      user: user
-    }
-  })
-})
 
 exports.protect = asyncErrorHandler(async (req, res, next) => {
   let token;
@@ -92,6 +59,20 @@ exports.protect = asyncErrorHandler(async (req, res, next) => {
   next();
 })
 
+exports.getAllUser = asyncErrorHandler(async (req, res) => {
+  const user = await User.find().select('+active');
+  res.status(200).json({
+    status: "success",
+    result: user.length,
+    userList: user
+  })
+})
+
+exports.addNewUser = asyncErrorHandler(async (req, res) => {
+  const user = await User.create(req.body);
+  createSendToken(user, 201, res);
+})
+
 exports.loginUser = asyncErrorHandler(async (req, res, next) => {
 
   const { email, password } = req.body;
@@ -106,12 +87,7 @@ exports.loginUser = asyncErrorHandler(async (req, res, next) => {
     return next(new throwError('Incorrect Credentials!', 401))
   }
 
-  const token = createToken(user._id)
-  res.status(200).json({
-    status: 200,
-    token,
-    message: "Logged In"
-  })
+  createSendToken(user, 200, res);
 })
 
 exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
@@ -126,11 +102,11 @@ exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/lunchbox/v1/user/resetPassword/${resetToken}`;
+  const resetURL = `http://dev.lunch-box.com:3001/reset-pw?lb=${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+  const message = `Forgot your password?\n
+  Submit your new password and passwordConfirm to: ${resetURL}.\n
+  If you didn't forget your password, please ignore this email!`;
 
   try {
     await sendEmail({
@@ -215,7 +191,7 @@ exports.updateUser = asyncErrorHandler(async (req, res, next) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'address', 'phone');
+  const filteredBody = filterObj(req.body, 'address', 'phone', 'name');
   console.log(filteredBody)
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

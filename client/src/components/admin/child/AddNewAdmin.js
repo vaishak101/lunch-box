@@ -1,19 +1,17 @@
-import Header from './../../components/common/Header/Header'
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import AuthService from "./../../services/auth-service";
+import AuthService from "./../../../services/auth-service";
 import { useState } from "react";
-import './UserLogin.css';
 
-function Signup() {
+function AddNewAdmin() {
   const [msg, setMsg] = useState('')
   const navigate = useNavigate();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = (data) => {
-    AuthService.register(data).then(
+    AuthService.registerAdmin(data).then(
       () => {
-        setMsg("Logged In");
-        navigate('/user')
+        setMsg("Admin Registered");
+        alert("Admin Added!")
       },
       error => {
         const resMessage =
@@ -30,7 +28,6 @@ function Signup() {
 
   return (
     <>
-      <Header />
       <section className='signup'>
         <div className="container">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -115,19 +112,6 @@ function Signup() {
                 autoComplete='off' />
               <p className='error-msg'>{errors.phone?.message}</p>
             </div>
-            <div className="field-wrap">
-              <label htmlFor="address">Add your Address</label>
-              <input
-                type="text"
-                id='address'
-                {
-                ...register("address",
-                  {
-                    required: { value: true, message: "Please enter your address!" }
-                  })}
-                autoComplete='off' />
-              <p className='error-msg'>{errors.address?.message}</p>
-            </div>
 
             <button className='submit-btn' type='submit'>SignUp!</button>
             {msg && <p>{msg}</p>}
@@ -138,4 +122,4 @@ function Signup() {
   )
 }
 
-export default Signup;
+export default AddNewAdmin;

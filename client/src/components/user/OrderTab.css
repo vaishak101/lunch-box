@@ -1,0 +1,7 @@
+.order-tab li{display: flex;align-items: center; justify-content: space-between; border-radius:10px;border: 2px solid #d3d3d3;padding: 20px; margin-bottom: 10px;}
+
+.order-tab .title{font-size: 2.2rem;margin-bottom: 5px;}
+.order-tab .price{font-size: 1.8rem;font-weight: 300;}
+.order-tab .qty{font-size: 1.8rem;font-weight: 700; margin-bottom: 5px;}
+.order-tab .date{font-size: 1.6rem; border-radius: 10px;}
+

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controller/userController')
+const adminController = require('../controller/adminController')
 
 router
   .route('/')
-  .get(userController.getAllUser)
+  .get(adminController.protect, userController.getAllUser)
   .post(userController.addNewUser)
 
 router

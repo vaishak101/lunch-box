@@ -14,7 +14,7 @@ const sendEmail = async options => {
   const mailOptions = {
     from: 'nairvaishak101@gmail.com',
     to: options.email,
-    subject: options.subject,
+    subject: "Lunch Box - Dev | Vaishak Nair | Password Reset",
     text: options.message
     // html:
   };
