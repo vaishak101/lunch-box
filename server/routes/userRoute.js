@@ -6,7 +6,7 @@ const adminController = require('../controller/adminController')
 router
   .route('/')
   .get(adminController.protect, userController.getAllUser)
-  .post(userController.protect, userController.addNewUser)
+  .post(userController.addNewUser)
 
 router
   .route('/login')

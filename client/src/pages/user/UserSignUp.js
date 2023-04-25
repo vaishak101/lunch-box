@@ -110,7 +110,7 @@ function Signup() {
                 {...register("phone",
                   {
                     required: { value: true, message: "Please enter your Phone Number!" },
-                    pattern: { value: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, message: ["Please enter a valid Phone Number!"] }
+                    // pattern: { value: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, message: ["Please enter a valid Phone Number!"] }
                   })}
                 autoComplete='off' />
               <p className='error-msg'>{errors.phone?.message}</p>

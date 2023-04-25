@@ -8,6 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 import AdminLogin from './pages/admin/AdminLogin';
 import Admin from './pages/admin/Admin';
 import './App.css';
+import ForgotPassword from './pages/user/ForgotPassword';
+import ResetPassword from './pages/user/ResetPassword';
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Route exact path='/user' element={< User />}></Route>
         <Route exact path='/admin-login' element={< AdminLogin />}></Route>
         <Route exact path='/admin' element={< Admin />}></Route>
+        <Route exact path='/forgot-pw' element={< ForgotPassword />}></Route>
+        <Route exact path='/reset-pw' element={< ResetPassword />}></Route>
       </Routes>
     </div>
   );
