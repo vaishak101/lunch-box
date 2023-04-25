@@ -20,7 +20,7 @@ function Admin() {
   const [userList, setUserList] = useState([]);
   useEffect(() => {
     if (!currentUser) {
-      return navigate("/login")
+      return navigate("/admin-login")
     }
     const menuUrl = 'http://127.0.0.1:3000/api/lunchbox/v1/menu/admin';
     const orderUrl = 'http://127.0.0.1:3000/api/lunchbox/v1/orders';
@@ -57,7 +57,6 @@ function Admin() {
 
 
 
-
   return (
 
     <section className="admin-dashboard">
@@ -79,7 +78,7 @@ function Admin() {
             {activeTab === "order" && <OrderTab orders={orders} token={currentUser.token} />}
             {activeTab === "contact" && <Contact messageList={messageList} token={currentUser.token} />}
             {activeTab === "user" && <UserTab userList={userList} token={currentUser.token} />}
-            {activeTab === "profile" && <ProfileTab userData={currentUser.data.user} token={currentUser.token} />}
+            {activeTab === "profile" && <ProfileTab adminData={currentUser.data.admin} token={currentUser.token} />}
           </div>
         </div>
       </div>

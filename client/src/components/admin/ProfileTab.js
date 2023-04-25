@@ -1,8 +1,23 @@
-const ProfileTab = ({ userData, token }) => {
+import ChangePwTab from "./child/ChangePwTab.js";
+import UpdateProfileTab from "./child/UpdateProfileTab"
+import DeleteProfileTab from "./child/DeleteProfileTab"
+import { useState } from "react";
 
+const ProfileTab = ({ adminData, token }) => {
+  const [activeInnerTab, setActiveInnerTab] = useState("update-profile");
   return (
     <div className="profile-tab">
       <h2>View All Orders</h2>
+      <ul className="nav">
+        <li className={activeInnerTab === "update-profile" ? "active" : ""} onClick={e => { setActiveInnerTab('update-profile') }}>Update Profile</li>
+        <li className={activeInnerTab === "change-password" ? "active" : ""} onClick={e => { setActiveInnerTab('change-password') }}>Change Password</li>
+        <li className={activeInnerTab === "delete-profile" ? "active" : ""} onClick={e => { setActiveInnerTab('delete-profile') }}>Delete Profile</li>
+      </ul>
+      <div className="outlet">
+        {activeInnerTab === "update-profile" && <UpdateProfileTab token={token} adminData={adminData} />}
+        {activeInnerTab === "change-password" && <ChangePwTab token={token} />}
+        {activeInnerTab === "delete-profile" && <DeleteProfileTab token={token} />}
+      </div>
     </div>
   );
 };

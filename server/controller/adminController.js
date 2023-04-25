@@ -179,26 +179,24 @@ exports.updateAdmin = asyncErrorHandler(async (req, res) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'address', 'phone');
-  console.log(filteredBody)
+  const filteredBody = filterObj(req.body, 'name', 'phone');
+
   // 3) Update admin document
   const updatedAdmin = await Admin.findByIdAndUpdate(req.admin.id, filteredBody, {
     new: true,
     runValidators: true
   });
 
-
   res.status(200).json({
     status: 'success',
     data: {
-      admin: updatedAdmin
+      admin: updatedAdmin.email
     }
   });
 })
 
 exports.deleteAdmin = asyncErrorHandler(async (req, res) => {
   await Admin.findByIdAndUpdate(req.admin.id, { active: false });
-
   res.status(204).json({
     status: 'success',
     data: null
