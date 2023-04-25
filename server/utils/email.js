@@ -12,9 +12,9 @@ const sendEmail = async options => {
 
   // 2) Define the email options
   const mailOptions = {
-    from: 'Lunch Box - Dev | Vaishak Nair',
+    from: 'nairvaishak101@gmail.com',
     to: options.email,
-    subject: options.subject,
+    subject: "Lunch Box - Dev | Vaishak Nair | Password Reset",
     text: options.message
     // html:
   };

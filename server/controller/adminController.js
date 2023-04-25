@@ -4,7 +4,7 @@ const throwError = require('./../utils/throwError');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util')
 const crypto = require('crypto');
-
+const sendEmail = require('./../utils/email');
 const createToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECURE_CODE, { expiresIn: process.env.JWT_EXPIRY })
 }
@@ -90,11 +90,10 @@ exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
   await admin.save({ validateBeforeSave: false });
 
   // 3) Send it to admin's email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/lunchbox/v1/admin/resetPassword/${resetToken}`;
+  const resetURL = `http://dev.lunch-box.com:3001/admin-reset-pw?lb=${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+  const message = `Forgot your password? Submit your new password and passwordConfirm to: ${resetURL}.\n
+  If you didn't forget your password, please ignore this email!`;
 
   try {
     await sendEmail({

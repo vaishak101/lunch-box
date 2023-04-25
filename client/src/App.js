@@ -10,6 +10,8 @@ import Admin from './pages/admin/Admin';
 import './App.css';
 import ForgotPassword from './pages/user/ForgotPassword';
 import ResetPassword from './pages/user/ResetPassword';
+import AdminForgotPassword from './pages/admin/AdminForgotPassword';
+import AdminResetPassword from './pages/admin/AdminResetPassword';
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
         <Route exact path='/admin' element={< Admin />}></Route>
         <Route exact path='/forgot-pw' element={< ForgotPassword />}></Route>
         <Route exact path='/reset-pw' element={< ResetPassword />}></Route>
+        <Route exact path='/admin-forgot-pw' element={< AdminForgotPassword />}></Route>
+        <Route exact path='/admin-reset-pw' element={< AdminResetPassword />}></Route>
       </Routes>
     </div>
   );
