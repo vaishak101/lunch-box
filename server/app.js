@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const errorHandler = require('./middleware/errorHandle');
 const throwError = require('./utils/throwError')
 const cors = require("cors");
@@ -8,8 +7,43 @@ const orderRouter = require('./routes/orderRoute');
 const contactRouter = require('./routes/contactRoute');
 const userRouter = require('./routes/userRoute');
 const adminRouter = require('./routes/adminRoute');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
-app.use(express.json());
+const app = express();
+
+// Set security HTTP headers
+app.use(helmet());
+
+// Limit requests from same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!'
+});
+app.use('/api', limiter);
+
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Prevent parameter pollution
+// app.use(
+//   hpp({
+//     whitelist: [
+
+//     ]
+//   })
+// );
+
 app.use(cors());
 app.use('/api/lunchbox/v1/menu', menuRouter)
 app.use('/api/lunchbox/v1/orders', orderRouter)

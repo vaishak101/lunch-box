@@ -1,6 +1,6 @@
 import Header from './../../components/common/Header/Header'
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "./../../services/auth-service";
 import { useState } from "react";
 import './UserLogin.css';
@@ -34,7 +34,8 @@ function Signup() {
       <section className='signup'>
         <div className="container">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
-
+            <h2 className="title">Hello,</h2>
+            <p className="desc">Please enter following details to Signup:</p>
             <div className="field-wrap">
               <label htmlFor="name">Enter your Name</label>
               <input

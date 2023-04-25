@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from './../../components/common/Header/Header';
 import './AdminLogin.css';
 import AuthService from "./../../services/auth-service";
@@ -47,7 +47,12 @@ function AdminLogin() {
               <input type="password" id='password' autoComplete="off" {...register("password", { required: { value: true, message: "Please enter your password!" } })} />
               <p className='error-msg'>{errors.password?.message}</p>
             </div>
-            <button className='submit-btn' type='submit'>Login!</button>
+            <div className="cta-wrap">
+              <button className='submit-btn' type='submit'>Login!</button>
+              <div className="fgt-pw">
+                <Link to={'/admin-forgot-pw'}>Forgot Password ?</Link>
+              </div>
+            </div>
             {msg && <p>{msg}</p>}
           </form>
         </div>

@@ -12,12 +12,14 @@ import ForgotPassword from './pages/user/ForgotPassword';
 import ResetPassword from './pages/user/ResetPassword';
 import AdminForgotPassword from './pages/admin/AdminForgotPassword';
 import AdminResetPassword from './pages/admin/AdminResetPassword';
+import PageNotFound from './pages/PageNotFound';
 
 
 function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="*" element={<PageNotFound />} />
         <Route exact path='/' element={< Home />}></Route>
         <Route exact path='/about' element={< About />}></Route>
         <Route exact path='/contact' element={< Contact />}></Route>

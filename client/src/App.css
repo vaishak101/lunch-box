@@ -1,0 +1,2 @@
+.page-404 a{padding: 20px;font-size: 1.6rem;font-weight: 700; border-radius: 20px; border: 1px solid salmon;transition: background 0.2s ease;}
+.page-404 a:hover{background: salmon;}
