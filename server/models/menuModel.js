@@ -23,6 +23,10 @@ const menuSchema = new mongoose.Schema({
   veg: {
     type: Boolean,
     required: [true, "Menu Item define if its VEG or not"]
+  },
+  amount: {
+    type: Number,
+    default: 1
   }
 })
 

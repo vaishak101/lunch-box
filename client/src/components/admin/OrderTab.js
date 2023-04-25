@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const OrderTab = ({ orders, token }) => {
   console.log(orders)
   return (
@@ -8,12 +10,19 @@ const OrderTab = ({ orders, token }) => {
           <li key={el._id}>
             <div className="left-wrap">
               <p>User Email: {el.email}</p>
-              <p>Order Items: {el.orderTitle}</p>
+              <h2>Order-Detail</h2>
+              <div class="order-detail">
+                <ul>
+                  {el.particular.map(item => <li>
+                    <span>{item.item}</span> x <span>{item.qty}</span>
+                  </li>)}
+                </ul>
+              </div>
             </div>
             <div className="right-wrap">
-              <p>Price: {el.orderPrice}</p>
-              <p>Qty: {el.orderQty}</p>
-              <p>Date: {el.Date}</p>
+              <p>Price: {el.totalPrice}</p>
+              <p>Qty: {el.totalQty}</p>
+              <p>Date: {moment(el.orderDate).format('dd-mm-YYYY')}</p>
             </div>
           </li>)}
       </ul>
