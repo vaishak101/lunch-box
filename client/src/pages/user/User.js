@@ -61,7 +61,7 @@ function User() {
           <div className="outlet">
             {activeTab === "menu" && <MenuTab userData={currentUser.data.user} token={currentUser.token} menu={menu} />}
             {activeTab === "order" && <OrderTab orders={orders} />}
-            {activeTab === "profile" && <ProfileTab />}
+            {activeTab === "profile" && <ProfileTab userData={currentUser.data.user} token={currentUser.token} />}
           </div>
         </div>
       </div>
