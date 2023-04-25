@@ -19,7 +19,7 @@ const ChangePwTab = ({ token }) => {
       },)
       .then(response => {
         alert("PW Changed");
-        AuthService.logout();
+        AuthService.logout("user");
         navigate('/login')
       });
   }

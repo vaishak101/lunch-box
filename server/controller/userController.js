@@ -60,11 +60,11 @@ exports.protect = asyncErrorHandler(async (req, res, next) => {
 })
 
 exports.getAllUser = asyncErrorHandler(async (req, res) => {
-  const user = await User.find();
+  const user = await User.find().select('+active');
   res.status(200).json({
     status: "success",
     result: user.length,
-    menu: user
+    userList: user
   })
 })
 

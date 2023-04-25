@@ -8,7 +8,9 @@ router
   .route('/')
   .get(userController.protect, menuController.getMenu)
   .post(adminController.protect, menuController.addMenuItem)
-
+router
+  .route('/admin')
+  .get(adminController.protect, menuController.getMenu)
 router
   .route('/:id')
   .patch(adminController.protect, menuController.updateMenuItem)

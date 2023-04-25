@@ -11,7 +11,7 @@ function Login() {
   const [msg, setMsg] = useState('')
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
-    AuthService.login(data).then(
+    AuthService.login(data, "user").then(
       () => {
         setMsg("Logged In");
         navigate('/user')

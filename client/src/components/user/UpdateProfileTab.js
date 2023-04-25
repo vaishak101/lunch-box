@@ -27,7 +27,9 @@ const UpdateProfileTab = ({ userData, token }) => {
       },)
       .then(response => {
         console.log(response)
-        alert("User Details Updated");
+        alert("User Details Updated. Please Login Again");
+        AuthService.logout("user");
+        navigate('/login');
       });
   }
 

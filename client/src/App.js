@@ -5,6 +5,8 @@ import About from './pages/about/About'
 import Contact from './pages/contact/Contact';
 import User from './pages/user/User';
 import { Route, Routes } from 'react-router-dom';
+import AdminLogin from './pages/admin/AdminLogin';
+import Admin from './pages/admin/Admin';
 import './App.css';
 
 
@@ -18,6 +20,8 @@ function App() {
         <Route exact path='/login' element={< Login />}></Route>
         <Route exact path='/signup' element={< Signup />}></Route>
         <Route exact path='/user' element={< User />}></Route>
+        <Route exact path='/admin-login' element={< AdminLogin />}></Route>
+        <Route exact path='/admin' element={< Admin />}></Route>
       </Routes>
     </div>
   );

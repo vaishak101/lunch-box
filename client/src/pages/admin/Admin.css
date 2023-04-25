@@ -1,0 +1,7 @@
+.admin-dashboard header{display: flex;justify-content: space-between; align-items: center;}
+
+/* CONTACT TAB */
+.contact-tab li{display: flex;align-items: center; justify-content: space-between; border-radius:10px;border: 2px solid #d3d3d3;padding: 20px; margin-bottom: 10px;}
+
+/* USER TAB */
+.user-tab li{display: flex;align-items: center; justify-content: space-between; border-radius:10px;border: 2px solid #d3d3d3;padding: 20px; margin-bottom: 10px;}

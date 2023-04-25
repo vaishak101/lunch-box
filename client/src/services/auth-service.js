@@ -1,10 +1,16 @@
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:3000/api/lunchbox/v1/user/login";
-const API_URL_SIGNUP = "http://127.0.0.1:3000/api/lunchbox/v1/user"
+const USER_LOGIN = "http://127.0.0.1:3000/api/lunchbox/v1/user/login";
+const API_URL_SIGNUP = "http://127.0.0.1:3000/api/lunchbox/v1/user";
+
+const ADMIN_LOGIN = "http://127.0.0.1:3000/api/lunchbox/v1/admin/login";
 
 class AuthService {
-  login(data) {
+
+  login(data, user) {
+    let API_URL;
+    user === "admin" ? API_URL = ADMIN_LOGIN : API_URL = USER_LOGIN;
+    console.log(API_URL, data)
     return axios
       .post(API_URL, {
         "email": data.email,
@@ -12,14 +18,14 @@ class AuthService {
       })
       .then(response => {
         if (response.data.token) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+          localStorage.setItem(user, JSON.stringify(response.data));
         }
         return response.data;
       });
   }
 
-  logout() {
-    localStorage.removeItem("user");
+  logout(user) {
+    localStorage.removeItem(user);
   }
 
   register(data) {
@@ -38,8 +44,22 @@ class AuthService {
     });
   }
 
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+  getCurrentUser(user) {
+    return JSON.parse(localStorage.getItem(user));;
+  }
+
+  adminLogin(data) {
+    return axios
+      .post(ADMIN_LOGIN, {
+        "email": data.email,
+        "password": data.password
+      })
+      .then(response => {
+        if (response.data.token) {
+          localStorage.setItem("admin", JSON.stringify(response.data));
+        }
+        return response.data;
+      });
   }
 }
 

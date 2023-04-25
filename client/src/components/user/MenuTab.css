@@ -4,7 +4,7 @@
 .menu-wrap .desc{font-size: 1.8rem;font-weight: 300;}
 .menu-wrap .price{font-size: 1.8rem;font-weight: 700; margin-bottom: 5px;}
 .menu-wrap .order-btn{font-size: 1.6rem;padding: 5px 15px; border-radius: 10px;}
-
+h2 span{font-weight: 300;}
 .qty-wrap{display: flex;align-items:center;justify-content: space-between;margin-bottom: 15px;font-size: 1.6rem;}
 .qty-wrap .btn-wrap{display:flex;margin: 0 -5px;}
 .qty-wrap .btn-wrap button{margin: 0 5px;padding: 2px 5px;font-size: 1.6rem;  }
@@ -14,3 +14,8 @@
 .order-modal{position: fixed; top: 50%; left: 50%;transform: translate(-50%,-50%); width: 500px; }
 .order-modal .content-wrap{position: relative;background: #fff; padding: 20px; border-radius: 10px; border: 3px solid salmon;}
 .order-modal .close-btn{position: absolute;right: -30px; top: -30px;display: flex; align-items: center; justify-content: center; background: #fff; width: 30px; height: 30px; border-radius: 50%;font-size: 2rem; border: 1px solid #000; cursor:pointer; }
+
+
+
+/* ADMIN */
+.admin-menu .menu-wrap li  button{margin:0 10px; padding: 10px;}

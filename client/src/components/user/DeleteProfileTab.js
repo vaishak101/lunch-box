@@ -13,7 +13,7 @@ const DeleteProfileTab = ({ token }) => {
       },)
       .then(response => {
         alert("User Deleted");
-        AuthService.logout();
+        AuthService.logout("user");
         navigate('/')
       });
   }

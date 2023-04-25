@@ -11,7 +11,7 @@ import ProfileTab from './../../components/user/ProfileTab'
 
 function User() {
   const navigate = useNavigate()
-  const currentUser = AuthService.getCurrentUser();
+  const currentUser = AuthService.getCurrentUser("user");
   const [activeTab, setActiveTab] = useState("menu");
   const [menu, setMenu] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -39,7 +39,7 @@ function User() {
   console.log(currentUser.data.user.email)
 
   function logout() {
-    AuthService.logout();
+    AuthService.logout("user");
     navigate("/login")
   }
 

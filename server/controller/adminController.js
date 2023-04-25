@@ -57,7 +57,7 @@ exports.protect = asyncErrorHandler(async (req, res, next) => {
   next();
 })
 
-exports.loginAdmin = asyncErrorHandler(async (req, res) => {
+exports.loginAdmin = asyncErrorHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
