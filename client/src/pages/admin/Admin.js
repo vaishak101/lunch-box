@@ -22,10 +22,10 @@ function Admin() {
     if (!currentUser) {
       return navigate("/admin-login")
     }
-    const menuUrl = 'http://127.0.0.1:3000/api/lunchbox/v1/menu/admin';
-    const orderUrl = 'http://127.0.0.1:3000/api/lunchbox/v1/orders';
-    const contactUrl = 'http://127.0.0.1:3000/api/lunchbox/v1/contact'
-    const userUrl = 'http://127.0.0.1:3000/api/lunchbox/v1/user'
+    const menuUrl = 'https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/menu/admin';
+    const orderUrl = 'https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/orders';
+    const contactUrl = 'https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/contact'
+    const userUrl = 'https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/user'
 
     axios.get(menuUrl, { headers: { "Authorization": `Bearer ${currentUser.token}` } })
       .then(res => {

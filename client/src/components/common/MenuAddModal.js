@@ -7,7 +7,7 @@ function MenuAddModal({ setAddModal, token }) {
 
   function addMenuItem(data) {
     axios.post(
-      `http://127.0.0.1:3000/api/lunchbox/v1/menu`,
+      `https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/menu`,
       {
         name: data.name,
         desc: data.desc,

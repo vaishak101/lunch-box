@@ -11,7 +11,7 @@ function Contact() {
 
   function sendMessage(data) {
     return axios
-      .post("http://127.0.0.1:3000/api/lunchbox/v1/contact", {
+      .post("https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/contact", {
         "name": data.name,
         "email": data.email,
         "message": data.message
