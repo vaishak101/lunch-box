@@ -7,7 +7,7 @@ const DeleteProfileTab = ({ token }) => {
   const onSubmit = () => {
     console.log("run")
     axios.delete(
-      "http://127.0.0.1:3000/api/lunchbox/v1/user/deleteUser",
+      "https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/user/deleteUser",
       {
         headers: { "Authorization": `Bearer ${token}` }
       },)

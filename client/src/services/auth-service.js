@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const USER_LOGIN = "http://127.0.0.1:3000/api/lunchbox/v1/user/login";
-const API_URL_SIGNUP = "http://127.0.0.1:3000/api/lunchbox/v1/user";
+const USER_LOGIN = "https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/user/login";
+const API_URL_SIGNUP = "https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/user";
 
-const ADMIN_LOGIN = "http://127.0.0.1:3000/api/lunchbox/v1/admin/login";
-const ADMIN_SIGNUP = "http://127.0.0.1:3000/api/lunchbox/v1/admin"
+const ADMIN_LOGIN = "https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/admin/login";
+const ADMIN_SIGNUP = "https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/admin"
 class AuthService {
 
   login(data, user) {

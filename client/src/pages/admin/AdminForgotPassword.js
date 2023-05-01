@@ -13,7 +13,7 @@ function AdminForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
     setDisable(true)
-    axios.post("http://127.0.0.1:3000/api/lunchbox/v1/admin/forgotPassword", {
+    axios.post("https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/admin/forgotPassword", {
       "email": data.email,
     })
       .then(response => {
