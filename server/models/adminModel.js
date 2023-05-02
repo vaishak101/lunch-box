@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-const bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 const adminModel = new mongoose.Schema({
@@ -58,7 +58,8 @@ const adminModel = new mongoose.Schema({
 
 adminModel.pre('save', async function (next) {
   if (!this.isModified('password')) return
-  this.password = await bcrypt.hash(this.password, 12)
+  this.password = await bcrypt.hash(this.password, 8);
+  // this.password = await bcrypt.hash(this.password, 12)
   this.passwordConfirm = undefined;
   next();
 })
