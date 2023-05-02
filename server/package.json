@@ -2,17 +2,16 @@
   "name": "lunch-box-server",
   "version": "1.0.0",
   "description": "Server side setup for Lunch box App created for Vaishak Nair's Portfolio",
-  "main": "index.js",
+  "main": "./api/index.js",
   "scripts": {
-    "local": "nodemon index.js",
-    "start": "node index.js"
+    "local": "nodemon ./api/index.js",
+    "start": "node ./api/index.js"
   },
   "author": "Vaishak Nair",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-mongo-sanitize": "^2.2.0",
