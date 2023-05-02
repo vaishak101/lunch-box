@@ -1,3 +1,6 @@
+.cta{border: none; border-radius: 20px;background: #551A8B; padding: 20px 0;}
+.cta a{color: #fff; font-size: 24px;}
+
 /* HERO SECTION */
 .hero .content-wrap{display: flex; align-items: center;}
 .hero .left-wrap ,.hero .right-wrap{flex: 1 0 auto;}

@@ -15,7 +15,7 @@ function MenuEditModal({ menuDetail, setShowEditModal, token }) {
 
   function editMenuItem(data) {
     axios.patch(
-      `https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/menu/${menuDetail._id}`,
+      `http://127.0.0.1:3000/api/lunchbox/v1/menu/${menuDetail._id}`,
       {
         name: data.name,
         desc: data.desc,

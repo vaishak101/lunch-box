@@ -36,7 +36,7 @@ const MenuTab = ({ menu, token }) => {
 
     if (result) {
       axios.delete(
-        `https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/menu/${id} `,
+        `http://127.0.0.1:3000/api/lunchbox/v1/menu/${id} `,
         {
           headers: { "Authorization": `Bearer ${token} ` }
         },)

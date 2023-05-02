@@ -13,7 +13,7 @@ const ResetPassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
     axios.patch(
-      `https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/user/resetPassword/${token}`,
+      `http://127.0.0.1:3000/api/lunchbox/v1/user/resetPassword/${token}`,
       {
         "password": data.new_pw,
         "passwordConfirm": data.confirm_new_pw

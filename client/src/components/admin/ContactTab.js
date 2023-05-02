@@ -7,7 +7,7 @@ const ContactTab = ({ messageList, token }) => {
     const result = window.confirm("Are you Sure you want to delete Item ?");
     if (result) {
       axios.delete(
-        `https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/contact/${id} `,
+        `http://127.0.0.1:3000/api/lunchbox/v1/contact/${id} `,
         {
           headers: { "Authorization": `Bearer ${token} ` }
         },)
