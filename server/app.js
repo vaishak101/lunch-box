@@ -45,6 +45,9 @@ app.use(xss());
 // );
 
 app.use(cors());
+app.use('/', (req, res) => {
+  res.json({ message: 'Welcome to Lunch Box Server' })
+})
 app.use('/api/lunchbox/v1/menu', menuRouter)
 app.use('/api/lunchbox/v1/orders', orderRouter)
 app.use('/api/lunchbox/v1/contact', contactRouter)
