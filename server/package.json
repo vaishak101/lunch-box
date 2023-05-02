@@ -4,7 +4,8 @@
   "description": "Server side setup for Lunch box App created for Vaishak Nair's Portfolio",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "start": "node index.js"
   },
   "author": "Vaishak Nair",
   "license": "ISC",
