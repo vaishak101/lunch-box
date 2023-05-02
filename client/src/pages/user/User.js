@@ -20,8 +20,8 @@ function User() {
     if (!currentUser) {
       return navigate("/login")
     }
-    const menu = 'http://127.0.0.1:3000/api/lunchbox/v1/menu';
-    const order = 'http://127.0.0.1:3000/api/lunchbox/v1/orders/user'
+    const menu = 'https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/menu';
+    const order = 'https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/orders/user'
     axios.get(menu, { headers: { "Authorization": `Bearer ${currentUser.token}` } })
       .then(res => {
         setMenu([...res.data.menu]);

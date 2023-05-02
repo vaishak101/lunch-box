@@ -72,7 +72,7 @@ const MenuTab = ({ userData, token, menu }) => {
 
   function sendOrder(particular, totalQty, totalPrice) {
     axios.post(
-      "http://127.0.0.1:3000/api/lunchbox/v1/orders",
+      "https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/orders",
       {
         "email": userData.email,
         "particular": particular,

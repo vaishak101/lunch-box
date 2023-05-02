@@ -14,7 +14,7 @@ const UpdateProfileTab = ({ adminData, token }) => {
 
   const onSubmit = (data) => {
     axios.patch(
-      `http://127.0.0.1:3000/api/lunchbox/v1/admin/updateAdmin`,
+      `https://lunch-box-lsdisrrct-vaishak101.vercel.app/api/lunchbox/v1/admin/updateAdmin`,
       {
         "name": data.name,
         "phone": data.phone,
