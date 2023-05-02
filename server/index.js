@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const app = require("./../app")
+const app = require("./app")
 let server;
 dotenv.config({ path: './config.env' });
 const db = process.env.DATABASE.replace(
@@ -27,6 +27,8 @@ connectDB().then(() => {
   })
 })
 
+module.exports = app;
+
 process.on('unhandledRejection', err => {
   console.log('Unhandled Rejection');
   console.log(err.name, err.message);
@@ -34,4 +36,3 @@ process.on('unhandledRejection', err => {
     process.exit(1);
   });
 });
-
